@@ -1,2 +1,7 @@
 This file serves no purpose, but makes certain the src/ folder exists in the repo.
+<<<<<<< HEAD
 not the  same damn thing kugig
+=======
+
+hi there changesds
+>>>>>>> branch 'master' of https://github.com/CSE116-Spring2018/s18semesterproject-b6team3.git
