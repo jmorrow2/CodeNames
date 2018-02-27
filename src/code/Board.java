@@ -4,6 +4,12 @@ package code;
 //import java.awt.Graphics;
 
 public class Board {
+	
+	public Location[] locArray;
+
+	public Board() {
+		locArray = new Location[25];
+	}
 
 	/**public void ColorGrid(Graphics colorScheme) {
         
