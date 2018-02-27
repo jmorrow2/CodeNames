@@ -1,10 +1,15 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.HashMap;
 
-import javax.xml.stream.Location;
-
 import org.junit.Test;
+
+import code.Board;
+import code.Model;
+import code.Location;
 
 public class codenamesTest {
 
@@ -40,19 +45,19 @@ public class codenamesTest {
 	
 	HashMap<String, Integer> redHash = new HashMap<>();
 	for(int i=0; i<9; i++) {
-		hash.add(redArray[i], i++);
+		redHash.add(redArray[i], i++);
 	}
 	assertEquals(9, redHash.size());
 	
 	HashMap<String, Integer> blueHash = new HashMap<>();
 	for(int i=0; i<9; i++) {
-		hash.add(blueArray[i], i++);
+		blueHash.add(blueArray[i], i++);
 	}
 	assertEquals(8, blueHash.size());
 	
 	HashMap<String, Integer> bystanderHash = new HashMap<>();
 	for(int i=0; i<9; i++) {
-		hash.add(bystanderArray[i], i++);
+		bystanderHash.add(bystanderArray[i], i++);
 	}
 	assertEquals(9, bystanderHash.size());
 }
