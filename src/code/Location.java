@@ -20,26 +20,44 @@ public class Location {
 		revealed = false;
 	}
 	
+	/**
+	Getter Method for codename string
+	*/
 	public String getCodename() {
 		return codename;
 	}
 
+	/**
+	Setter Method for codename string
+	*/
 	public void setCodename(String codename) {
 		this.codename = codename;
 	}
 
+	/**
+	Getter Method for agent string
+	*/
 	public String getAgent() {
 		return agent;
 	}
 
+	/**
+	Setter Method for agent string
+	*/
 	public void setAgent(String agent) {
 		this.agent = agent;
 	}
 
+	/**
+	Getter Method for revealed boolean
+	*/
 	public boolean getRevealed() {
 		return revealed;
 	}
 
+	/**
+	Setter Method for revealed boolean
+	*/
 	public void setRevealed(boolean revealed) {
 		this.revealed = revealed;
 	}
