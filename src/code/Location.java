@@ -3,11 +3,11 @@ package code;
 public class Location {
 	
 	/** codename assigned to the location instance */
-	public String codename;
+	private String codename;
 	/** agent assigned to the location instance */
-	public String agent;
+	private String agent;
 	/** boolean declaring whether or not the locations agent has been revealed yet */
-	public boolean revealed;
+	private boolean revealed;
 	
 	/**Instances of this class are used to represent a space on the game board
 	 * 
@@ -18,5 +18,29 @@ public class Location {
 		codename = cd;
 		agent = a;
 		revealed = false;
+	}
+	
+	public String getCodename() {
+		return codename;
+	}
+
+	public void setCodename(String codename) {
+		this.codename = codename;
+	}
+
+	public String getAgent() {
+		return agent;
+	}
+
+	public void setAgent(String agent) {
+		this.agent = agent;
+	}
+
+	public boolean getRevealed() {
+		return revealed;
+	}
+
+	public void setRevealed(boolean revealed) {
+		this.revealed = revealed;
 	}
 }
