@@ -1,6 +1,16 @@
 package code;
 
+/**@author James Morrow
+@author Harsh Patel
+@author Victoria Dib
+@author Jason Zhou
+@author Kimberly So
+
+This class creates 25 Location Instances. 
+*/
+
 import java.util.ArrayList;
+
 
 public class Board {
 	
@@ -14,9 +24,16 @@ public class Board {
 		locArray = l;
 	}
 	
+	/**
+	Getter Metod for Array
+	*//
 	public ArrayList<Location> getLocArray() {
 		return locArray;
 	}
+	
+	/**
+	Setter Metod for Array
+	*//
 
 	public void setLocArray(ArrayList<Location> locArray) {
 		this.locArray = locArray;
