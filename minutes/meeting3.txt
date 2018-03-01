@@ -1,0 +1,36 @@
+
+Meeting Minutes for _3/1/18________:
+
+
+
+Meeting Attendance: (list all students who were present) [1 minute] (H - here, A - absent, S - sick) 
+
+	Jason (H)
+
+	Harsh (H)
+
+	James (H)
+
+	Kim (H)
+
+	Victoria (H)
+
+	
+
+Tasks completed since last meeting [1-2 minutes]
+  Making Test Class.
+	Defining Test Cases for each method. 
+
+
+Tasks worked upon but not completed since last meeting [2-4 minutes]
+  Writing javadoc notation
+
+
+
+Goals for the next meeting [20+ minutes]
+  Work on phase 2
+
+
+
+Schedule for the next week's set of pair programming meetings [3-4 minutes]
+	Pair programming not assigned yet.
