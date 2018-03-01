@@ -25,14 +25,14 @@ public class Board {
 	}
 	
 	/**
-	Getter Metod for Array
+	Getter Method for locArray ArrayList
 	*/
 	public ArrayList<Location> getLocArray() {
 		return locArray;
 	}
 	
 	/**
-	Setter Metod for Array
+	Setter Method for locArray ArrayList
 	*/
 
 	public void setLocArray(ArrayList<Location> locArray) {
