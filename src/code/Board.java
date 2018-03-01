@@ -6,7 +6,7 @@ package code;
 @author Jason Zhou
 @author Kimberly So
 
-This class creates 25 Location Instances. 
+This class stores 25 location instances. 
 */
 
 import java.util.ArrayList;
