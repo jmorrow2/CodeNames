@@ -1,5 +1,8 @@
 package code;
 
+/** This class creates a Board of 25 Location Instances. 
+*/
+
 import java.util.ArrayList;
 
 public class Board {
