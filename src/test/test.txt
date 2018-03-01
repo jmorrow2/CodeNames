@@ -1,27 +1,27 @@
 TEST CASES FOR EACH METHOD  //Fulfills Bullet Number 1
 
-Method: Board    // Fullfills Bullet 2
-Test: createBoardTest //Fullfills Bullet 2 (test)
+Method: Board    // Fulfills Bullet 2
+Test: createBoardTest //Fulfills Bullet 2 (test)
 
-Method: chooseCodenames   //Fullfills Bullet 3 & 4
-Test: chooseCodenamesTest  //Fullfills Bullet 3 & 4(test)
+Method: chooseCodenames   //Fulfills Bullet 3 & 4
+Test: chooseCodenamesTest  //Fulfills Bullet 3 & 4(test)
 
-Method: createAgent   // Fullfills Bullet 5
-Test: createAgentTest // Fullfills Bullet 5
+Method: createAgent   // Fulfills Bullet 5
+Test: createAgentTest // Fulfills Bullet 5
 
-Method:                  //Fullfills Bullet 6
-Test:                    //Fullfills Bullet 6
+Method:                  //Fulfills Bullet 6
+Test:                    //Fulfills Bullet 6
 
-Method:                //Fullfills Bullet 7
-Test:                  //Fullfills Bullet 7
+Method:                //Fulfills Bullet 7
+Test:                  //Fulfills Bullet 7
 
-Method:              //Fullfills Bullet 8
-Test:                //Fullfills Bullet 8
+Method:              //Fulfills Bullet 8
+Test:                //Fulfills Bullet 8
 
-Method:             //Fullfills Bullet 9
-Test:              //Fullfills Bullet 9
+Method:             //Fulfills Bullet 9
+Test:              //Fulfills Bullet 9
 
-Method:           //Fullfills Bullet 10
-Test:             //Fullfills Bullet 10
+Method:           //Fulfills Bullet 10
+Test:             //Fulfills Bullet 10
 
-Everyline is commented.  //Fullfills Bullet 11   FINISH THIS
+Every line is commented.  //Fulfills Bullet 11   FINISH THIS
