@@ -44,10 +44,12 @@ public class codenamesTest {
 	@Test
 	public void createAgentsTest() {
 		Model m = new Model();
+	
 		assertEquals(9, m.redArray.size());
 		assertEquals(8, m.blueArray.size());
 		assertEquals(7, m.bystanderArray.size());
 		assertEquals(1, m.assassinArray.size());
+	
 	
 //	HashMap<String, Integer> redHash = new HashMap<>();
 	ArrayList<String> redAgents = new ArrayList<>();

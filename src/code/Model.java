@@ -64,6 +64,7 @@ public class Model {
 		Collections.shuffle(allCodenamesArray);
 		for(int i=0; i<25; i++) {
 			the25names.add(allCodenamesArray.get(i));
+			allCodenamesArray.remove(i);
 		}
 		return the25names;
 	}
@@ -73,15 +74,19 @@ public class Model {
 		for (int i=0; i<25; i++) {
 			if(i <10) {
 				answer.add("Red");
+				redArray.add("Red");
 			}	
 			if(i >=10 && i <18) {
 				answer.add("Blue");
+				blueArray.add("Blue");
 		}
 			if(i >=18 && i <24) {
 				answer.add("Bystander");
+				bystanderArray.add("Bystander");
 		}
 			if(i==24) {
 				answer.add("Assassin");
+				assassinArray.add("Assassin");
 		}
 		}
 		Collections.shuffle(answer);
