@@ -4,7 +4,14 @@ import java.util.ArrayList;
 
 public class Board {
 	
+	/** Instance Varaiable of type ArrayList with Location as arguments. 
+	*/
+	
 	public ArrayList<Location> locArray;
+	
+	/** This method is the the constructor for the class.
+	@param locArray: an array of 25 instances of Location.
+	*/
 
 	public Board(ArrayList<Location> l) {
 		locArray = l;
