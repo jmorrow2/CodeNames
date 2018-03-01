@@ -26,14 +26,14 @@ public class Board {
 	
 	/**
 	Getter Metod for Array
-	*//
+	*/
 	public ArrayList<Location> getLocArray() {
 		return locArray;
 	}
 	
 	/**
 	Setter Metod for Array
-	*//
+	*/
 
 	public void setLocArray(ArrayList<Location> locArray) {
 		this.locArray = locArray;
