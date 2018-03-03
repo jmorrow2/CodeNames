@@ -8,25 +8,42 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class Model {
-	
-	private Board board;
+	/** Instance variable called "board" of Board class belonging to the Model class */
+	private Board board;   
+	/** Number of rows in the Model Constructor */
 	private int row;
+	/** Number of columns in the Model Constructor */
 	private int column;
+	/** Number of redAgents in the Model Constructor */
 	private int redAgents;
+	/** Number of blueAgents in the Model Constructor */
 	private int blueAgents;
+	/** Number of bystanders in the Model Constructor */
 	private int bystanders;
+	/** Number of assassins in the Model Constructor */
 	private int assassins;
+	/** Name of the file being read */
 	private String file;
+	/** ArrayList containing all possible codeNames read from the file*/
 	private ArrayList<String> allCodenamesArray;
+	/** ArrayList containing a certain number of the codeNames selected depending on the size of the board*/
 	private ArrayList<String> codenamesArray;
+	/** ArrayList containing all of the possible randomly generated assignments for the agents, bystanders, and assassins*/
 	private ArrayList<String> agentArray;
+	/** ArrayList containing all the assignments for each location -not revealed, agents/bystanders/assassins, red team starts first*/
 	private ArrayList<Location> locArray;
+	/** ArrayList */
 	private ArrayList<String> illegalGuessArray;
+	/** Tells you whose turn it is */
 	private boolean redTurn;
+	/** Tells you whose turn it is */
 	private boolean blueTurn;
+	/** Variable named "clue" that gives a clue */
 	private String clue;
+	/** Number of locations whose codeName is related to the clue -always a whole number greater than 0 */
 	private int count;
 	
+	/** Constructor of Model class*/
 	public Model(int r, int c, int red, int blue, int bys, int assassin, String f) {
 		row = r;
 		column = c;
@@ -44,12 +61,12 @@ public class Model {
 		redTurn = true;
 		blueTurn = false;
 	}
-	
+	/** Method that creates a new Board*/
 	public Board createBoard(ArrayList<Location> l) {
 		Board answer = new Board(l);
 		return answer;
 	}
-	
+	/** Method that reads the file and adds it to an ArrayList*/
 	public ArrayList<String> readFile(String s) {
 		ArrayList<String> answer = new ArrayList<String>();
 		try {
@@ -62,7 +79,7 @@ public class Model {
 		        }
 		return answer;
 	}
-	
+	/** Selects random codeNames and puts it in an ArrayList*/
 	public ArrayList<String> chooseCodenames() {
 		HashMap<String, Integer> hash = new HashMap<String, Integer>();
 		ArrayList<String> answer = new ArrayList<String>();
@@ -78,7 +95,7 @@ public class Model {
 		}
 		return answer;
 	}
-
+	/** Assigns codeNames either "Red", "Blue", "Bystander", or "Assassin"*/
 	public ArrayList<String> createAgents(){
 		ArrayList<String> answer = new ArrayList<String>();
 		for (int i=0; i<redAgents; i++) {
@@ -96,7 +113,7 @@ public class Model {
 		Collections.shuffle(answer);
 		return answer;
 	}
-	
+	/** Gives each codeName and agent a location on the Board*/
 	public ArrayList<Location> createLocationsArray() {
 		ArrayList<Location> answer = new ArrayList<Location>();
 		for(int i=0; i<(row*column); i++) {
