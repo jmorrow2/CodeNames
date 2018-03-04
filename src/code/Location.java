@@ -29,7 +29,7 @@ public class Location {
 	}
 
 	/**
-	Setter Method for codename string
+	Setter Method for codename string that sets the current code name
 	*/
 	public void setCodename(String codename) {
 		this.codename = codename;
@@ -43,7 +43,7 @@ public class Location {
 	}
 
 	/**
-	Setter Method for agent string
+	Setter Method for agent string that sets the current agent
 	*/
 	public void setAgent(String agent) {
 		this.agent = agent;
@@ -57,7 +57,7 @@ public class Location {
 	}
 
 	/**
-	Setter Method for revealed boolean
+	Setter Method for revealed
 	*/
 	public void setRevealed(boolean revealed) {
 		this.revealed = revealed;
