@@ -33,7 +33,7 @@ chooseCodenamesTest()
 	
 	Method - code.Model.chooseCodenames
 	Test Case - test.codenamesTest.chooseCodeNamesTest
-	Functionality - Creates List containing a number of distinct codenames
+	Functionality - Creates the codename array list and the illegalGuessArrayList, both containing a number of distinct codenames
 	 selected depending on number of Location instances[10 points]
 	
 createAgentsTest()
@@ -58,16 +58,6 @@ CreateLocationsArrayTest()
 	Functionality - Creates a list holding the instances of Location and assigns each
 	location a code name and an agent team, and the status not revealed.
 	(the number of instances of location can change depending on the size of the gameboard grid.
-	
-CreateIllegalGuessArrayTest()
-	Fulfills bullet 7
-		Method defined which correctly returns if a clue is legal or 
-		illegal (clues cannot equal a current codename unless that codename
-		is in a locations that was already Revealed) [10 points]
-		
-	Method - code.Model.createIllegalGuessArray
-	Test Case - test.codenamesTest.createIllegalGuessArray
-	Functionality - Returns whether the clue is possible to make or not
 	
 clueCheckTest()
 	Fulfills bullet 7
