@@ -20,7 +20,7 @@ import java.util.HashMap;
 public class Model {
 	/**
 	 *  Instance variable of the Board class belonging to the Model class
-	 *  */
+	 */
 	private Board board;   
 	
 	/**
