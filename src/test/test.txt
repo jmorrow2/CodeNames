@@ -1,27 +1,111 @@
 TEST CASES FOR EACH METHOD  //Fulfills Bullet Number 1
+test.txt
+	Fulfills bullet 1
+		Submission includes an updated tests.txt file 
+		listing the class and method name of the test defined for each
+		of these requirements [2 points]
+		
+		Functionality - Lists the class and method name of all test cases.
 
-Method: Board    // Fulfills Bullet 2
-Test: createBoardTest //Fulfills Bullet 2 (test)
+createBoardTest()
+	Fulfills bullet 2 
+		Defines a Board class contains 25 Location instances [6 points]
+		
+	Method - code.Model.createBoard
+	Test Case - test.codenamesTest.createBoardTest
+	Functionality - Defines a Board class that contains an array list of
+	a number of Location instances depending on the size of the board [6 points]
+	
 
-Method: chooseCodenames   //Fulfills Bullet 3 & 4
-Test: chooseCodenamesTest  //Fulfills Bullet 3 & 4(test)
+readFileTest() 
+	Fulfills bullet 3
+		Correctly reads codenames from a file named GameWords.txt and
+		stores them in a List [10 points] 
+			
+	Method - code.Model.readFile
+	Test Case - test.codenamesTest.readFileTest
+	Functionality - Reads GameWords.txt and adds them into an arrayList
+										
+chooseCodenamesTest()
+	Fulfills bullet 4
+		Creates List containing 25 distinct codenames
+		selected at random [10 points]
+	
+	Method - code.Model.chooseCodenames
+	Test Case - test.codenamesTest.chooseCodeNamesTest
+	Functionality - Creates List containing a number of distinct codenames
+	 selected depending on number of Location instances[10 points]
+	
+createAgentsTest()
+	Fulfills bullet 5 
+		Creates List containing randomly generated assignments
+		for each of the 9 Red Agents, 8 Blue Agents, 7 Innocent
+		Bystanders, and 1 Assassin [10 points]
+		
+	Method - code.Model.createAgents
+	Test Case - test.codenamesTest.createAgentsTest
+	Functionality - creates 9 red agents, 8 blue agents, 7 bystanders, 1 assassin 
+	and adds them into an arraylist (these are not set numbers. If the game board size increases,
+	we assumed the number of agents can change as well)
+	
+CreateLocationsArrayTest()
+	Fulfills bullet 6
+		When game started, it is Red team's move and each of Board's
+		25 Location instances is assigned a codename, Person, and is Not Revealed
+		
+	Method - code.Model.createLocationsArray
+	Test Case - test.codenamesTest.createLocationsArray
+	Functionality - Creates a list holding the instances of Location and assigns each
+	location a code name and an agent team, and the status not revealed.
+	(the number of instances of location can change depending on the size of the gameboard grid.
+	
+CreateIllegalGuessArrayTest()
+	Fulfills bullet 7
+		Method defined which correctly returns if a clue is legal or 
+		illegal (clues cannot equal a current codename unless that codename
+		is in a locations that was already Revealed) [10 points]
+		
+	Method - code.Model.createIllegalGuessArray
+	Test Case - test.codenamesTest.createIllegalGuessArray
+	Functionality - Returns whether the clue is possible to make or not
+	
+clueCheckTest()
+	Fulfills bullet 7
+		Method defined which correctly returns if a clue is legal or 
+		illegal (clues cannot equal a current codename unless that codename
+		is in a locations that was already Revealed) [10 points]
+	
+	Method - code.Model.clueCheckTest
+	Test Case - test.codenamesTest.clueCheckTest
+	Functionality - Iterates through illegalGuessArray to checks to see if clue is allowed to be made or not(legal/illegal)
 
-Method: createAgent   // Fulfills Bullet 5
-Test: createAgentTest // Fulfills Bullet 5
+selectedTest()
+	Fulfills bullet 8
+		Method defined which decrements the count, updates a Location when the Location's
+		codename was selected, and returns if the Location contained the current team's Agent [10 points]
 
-Method:                  //Fulfills Bullet 6
-Test:                    //Fulfills Bullet 6
-
-Method:                //Fulfills Bullet 7
-Test:                  //Fulfills Bullet 7
-
-Method:              //Fulfills Bullet 8
-Test:                //Fulfills Bullet 8
-
-Method:             //Fulfills Bullet 9
-Test:              //Fulfills Bullet 9
-
-Method:           //Fulfills Bullet 10
-Test:             //Fulfills Bullet 10
-
-Every line is commented.  //Fulfills Bullet 11   FINISH THIS
+	Method - code.Model.selectedTest
+	Test Case - test.codenamesTest.selectedTest
+	Functionality - Sets location to revealed and removes guess from illegal, making it a legal guess. Count is 
+		decremented and then checks which team's agent was in the location. 
+	
+winningStateTest()
+	Fulfills bullet 9
+		Method defined which correctly returns whether or not the Board is in one of
+		the winning states [15 points]
+		
+	Method - code.Model.winningState
+	Test Case - test.codenamesTest.winningStateTest
+	Functionality - Increments each teams count until all agents (ex: all 9 red,all 8 blue or the 1 assassin) are found. 
+	If all blue or red agents are revealed or if the assassin is revealed (team that reveals assassin loses) and game 
+	is put in a winning state
+	
+assassinsRevealedTest()
+	Fulfills bullet 10
+		Method defined which correctly returns which team did not
+		lose (i.e., win) when the Assassin was revealed 
+		
+	Method - code.Model.assassinsRevealed
+	Test Case - test.codenamesTest.assassinsRevealedTest
+	Functionality - checks to see if a team revealed the assassin and returns the opposite team that wins.
+	

@@ -13,6 +13,7 @@ public class Location {
 	 * 
 	 * @param cd codename to be assigned to  the location instance
 	 * @param a agent to be assigned to the location instance
+	 * @param {{@code false} At the start of the game all agents are not revealed.
 	 */
 	public Location(String cd, String a) {
 		codename = cd;
