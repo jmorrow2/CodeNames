@@ -2,6 +2,13 @@ package code;
 
 public class Location {
 	
+	/**@author James Morrow
+	@author Harsh Patel
+	@author Victoria Dib
+	@author Jason Zhou
+	@author Kimberly So
+	*/
+	
 	/** codename assigned to the location instance */
 	private String codename;
 	/** agent assigned to the location instance */
@@ -13,7 +20,7 @@ public class Location {
 	 * 
 	 * @param cd codename to be assigned to  the location instance
 	 * @param a agent to be assigned to the location instance
-	 * @param {{@code false} At the start of the game all agents are not revealed.
+	 * Sets boolean revealed to false at the start of the game because all agents are not revealed.
 	 */
 	public Location(String cd, String a) {
 		codename = cd;
