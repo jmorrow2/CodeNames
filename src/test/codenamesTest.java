@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -44,6 +43,8 @@ public class codenamesTest {
 			hash.put(test.get(i), 0);
 		}
 		assertEquals("The chosen codenames must all be unique", (m.getRow() * m.getColumn()), hash.size());
+		ArrayList<String> illegal = m.getIllegalGuessArray();
+		assertEquals("At the beginning of the game the illegalGuessArray must be the same as the codenamesArray", illegal, test);
 	}
 	
 	@Test
@@ -92,13 +93,6 @@ public class codenamesTest {
 			assertFalse("Every Location instance must have a agent string", l.getAgent().isEmpty());
 			assertFalse("Every Location instance must have a revealed boolean that is set to false", l.getRevealed());
 		}
-	}
-	
-	@Test
-	public void createIlegalGuessArrayTest() {
-		Model m = new Model(5, 5, 9, 8, 7, 1, "src/GameWords.txt");
-		ArrayList<String> test = m.createIlegalGuessArray();
-		assertEquals("At the beginning of the game the illegalGuessArray must be the same as the codenamesArray", test, m.getCodenamesArray());
 	}
 	
 	@Test 
