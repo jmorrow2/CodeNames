@@ -94,7 +94,6 @@ public class Model {
 		file = f;
 		allCodenamesArray = readFile(file);
 		codenamesArray = chooseCodenames();
-		illegalGuessArray = createIlegalGuessArray();
 		agentArray = createAgents();
 		locArray = createLocationsArray();
 		board = createBoard(locArray);
@@ -126,23 +125,24 @@ public class Model {
 		return answer;
 	}
 	/** 
+	 * Instantiates illegalGuessArray to a new ArrayList<String>
 	 * Shuffles the whole list of codenames and picks a number of codeNames depending on the number of Locations (row*column) 
-	 * and adds them to a hashmap to insure distinct codenames then adds the key into an arrayList. (codenamesArray)
+	 * and adds them to the answer ArrayList and illegalGuessArray if they are not already inside the answer ArrayList to insure distinct codenames are chosen (codenamesArray)
 	 * @return ArrayList<String> with a number of distinct codenames.
 	 * */
 	public ArrayList<String> chooseCodenames() {
-		HashMap<String, Integer> hash = new HashMap<String, Integer>();
+		illegalGuessArray = new ArrayList<String>();
 		ArrayList<String> answer = new ArrayList<String>();
 		Collections.shuffle(allCodenamesArray);
 			for(String s : allCodenamesArray) {
-				hash.put(s, 0);
-				if(hash.size() == (row*column)) {
-					break;
+				if(!(answer.contains(s))) {
+					answer.add(s);
+					illegalGuessArray.add(s);
+					if(answer.size() == (row * column)) {
+						break;
+					}
+				}
 			}
-		}
-		for(String k : hash.keySet()) {
-			answer.add(k);
-		}
 		return answer;
 	}
 	/** 
@@ -178,17 +178,7 @@ public class Model {
 		}
 		return answer;
 	}
-	/**
-	 * Creates an arraylist filled with a number of illegal guesses based on the size of the board
-	 * @return arraylist filled with illegal guesses.
-	 */
-	public ArrayList<String> createIlegalGuessArray(){
-		ArrayList<String> answer = new ArrayList<String>();
-		for(int i=0; i<(row*column); i++) {
-			answer.add(codenamesArray.get(i));
-		}
-		return answer;
-	}
+	
 	/**
 	 * @param c checks to see if clue is in illegalGuessArray
 	 *(clues cannot equal(illegal) to a codename unless that codename is in a locations that was already Revealed)
