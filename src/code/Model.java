@@ -186,8 +186,8 @@ public class Model {
 	}
 	/**
 	 * @param c checks to see if clue is in illegalGuessArray
-	 *(clues cannot equal a current codename unless that codename is in a locations that was already Revealed)
-	 * @return {@code false) if code is legal because it was already revealed.  {@code true} if code is not legal
+	 *(clues cannot equal(illegal) to a codename unless that codename is in a locations that was already Revealed)
+	 * @return {@code false) if it is legal because it was already revealed.  {@code true} if its an illegal move
 	 */
 	public boolean clueCheck(String c) {
 		for(String s : illegalGuessArray) {
