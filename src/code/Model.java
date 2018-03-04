@@ -101,14 +101,16 @@ public class Model {
 		redTurn = true;
 		blueTurn = false;
 	}
-	/** Method that creates a new Board
+	/** 
+	 * Method that creates a new Board
 	 * @param ArrayList<Location> l holds the all the locations on the board
 	 * @return A new board depending on the number of locations in the arraylist*/
 	public Board createBoard(ArrayList<Location> l) {
 		Board answer = new Board(l);
 		return answer;
 	}
-	/** Method that reads the file and adds it to an ArrayList
+	/** 
+	 * Method that reads the file and adds it to an ArrayList
 	 * @param s - the name of a file (/src/codeGameWords.txt)
 	 * @return an ArrayList<String> containing the words from the file*/
 	public ArrayList<String> readFile(String s) {
@@ -123,7 +125,8 @@ public class Model {
 		        }
 		return answer;
 	}
-	/** Shuffles the whole list of codenames and picks a number of codeNames depending on the number of Locations (row*column) 
+	/** 
+	 * Shuffles the whole list of codenames and picks a number of codeNames depending on the number of Locations (row*column) 
 	 * and adds them to a hashmap to insure distinct codenames then adds the key into an arrayList. (codenamesArray)
 	 * @return ArrayList<String> with a number of distinct codenames.
 	 * */
@@ -142,7 +145,8 @@ public class Model {
 		}
 		return answer;
 	}
-	/** Creates  members either Red agents, blue agents, bystanders or an Assassin and 
+	/** 
+	 * Creates  members either Red agents, blue agents, bystanders or an Assassin and 
 	 * shuffles them up in an arrayList so they will be randomly assigned.
 	 * @return a shuffled arraylist of possible agent assignments*/
 	public ArrayList<String> createAgents(){
@@ -162,7 +166,8 @@ public class Model {
 		Collections.shuffle(answer);
 		return answer;
 	}
-	/** Gives each Location a codeName and an agent on the Board
+	/**
+	 * Gives each Location a codeName and an agent on the Board
 	 * @return a list of created locations each assigned with a codename and a team/agent.
 	 * */
 	public ArrayList<Location> createLocationsArray() {
