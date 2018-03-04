@@ -190,7 +190,7 @@ public class Model {
 	 * @return {@code false) if it is legal because it was already revealed.  {@code true} if its an illegal move
 	 */
 	public boolean clueCheck(String c) {
-		for(String s : illegalGuessArray) {
+		for(String s : illegalGuessArray) {  
 			if(s.equals(c)) {
 				return false;
 			}
