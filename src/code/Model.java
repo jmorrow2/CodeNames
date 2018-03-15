@@ -72,6 +72,11 @@ public class Model {
 	/** Number of locations whose codeName is related to the clue -always a whole number greater than 0 */
 	private int count;
 	
+	
+	//helps to see whos move it is 0 = red spymaster; 1 = blue spymaster;
+	private int turn;
+	
+	private ArrayList<Observer> _observers;
 	/** Constructor of Model class
 	 * @param r - number of rows in the board
 	 * @param c - number of columns in the board
@@ -93,12 +98,17 @@ public class Model {
 		assassins = assassin;
 		file = f;
 		allCodenamesArray = readFile(file);
-		codenamesArray = chooseCodenames();
-		agentArray = createAgents();
-		locArray = createLocationsArray();
-		board = createBoard(locArray);
-		redTurn = true;
-		blueTurn = false;
+//		codenamesArray = chooseCodenames();
+//		agentArray = createAgents();
+//		locArray = createLocationsArray();
+//		board = createBoard(locArray);
+//		redTurn = true;
+//		blueTurn = false;
+		
+		turn = 0;
+		
+		_observers = new ArrayList<Observer>();
+		notifyObservers();
 	}
 	/** 
 	 * Method that creates a new Board
@@ -106,6 +116,14 @@ public class Model {
 	 * @return A new board depending on the number of locations in the arraylist*/
 	public Board createBoard(ArrayList<Location> l) {
 		Board answer = new Board(l);
+		codenamesArray = chooseCodenames();
+		agentArray = createAgents();
+		locArray = createLocationsArray();
+	//	board = createBoard(locArray);
+		redTurn = true;
+		blueTurn = false;
+		notifyObservers();
+
 		return answer;
 	}
 	/** 
@@ -185,11 +203,20 @@ public class Model {
 	 * @return {@code false) if it is legal because it was already revealed.  {@code true} if its an illegal move
 	 */
 	public boolean clueCheck(String c) {
+		if(redTurn){
+			turn = 0;
+		}
+		else if(blueTurn) {
+			turn = 1;
+		}
+		
 		for(String s : illegalGuessArray) {   
 			if(s.equals(c)) {
+				
 				return false;
 			}
 		}
+		turn = -1; //invalid move
 		return true;
 	}
 	/**
@@ -447,6 +474,7 @@ public class Model {
  * @return gets the red team's turn. (true if it is their turn)
  */
 	public boolean getRedTurn() {
+		turn = 0;
 		return redTurn;
 	}
 /**
@@ -461,6 +489,7 @@ public class Model {
  * @return gets the blue teams turn. (true if it is their turn)
  */
 	public boolean getBlueTurn() {
+		turn = 1;
 		return blueTurn;
 	}
 /**
@@ -498,5 +527,20 @@ public class Model {
  */
 	public void setCount(int count) {
 		this.count = count;
+	}
+	public void addObserver(Observer obs) {
+		_observers.add(obs);
+		notifyObservers();
+	}
+
+	public void notifyObservers() {
+		for (Observer obs : _observers) {
+			obs.update();
+		}
+	}
+
+	// 0 = red turn; 1 = blue turn;
+public int Turnmove() {
+	return turn;
 	}
 }
