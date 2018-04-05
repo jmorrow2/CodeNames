@@ -540,7 +540,28 @@ public class Model {
 	}
 
 	// 0 = red turn; 1 = blue turn;
-public int Turnmove() {
+	public int Turnmove() {
 	return turn;
 	}
+	
+	/***
+	 * 
+	 */
+	public void restart() {
+		codenamesArray.clear();
+		codenamesArray = chooseCodenames();
+		
+		agentArray.clear();
+		agentArray = createAgents();
+		
+		locArray.clear();
+		locArray = createLocationsArray();
+		
+		board = createBoard(locArray);  //Need some help with this part! -v.d.  
+										//every time i click restart button, it is expanding the board.
+		redTurn = true;
+		blueTurn = false;
+		
+	}
+
 }

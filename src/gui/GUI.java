@@ -65,16 +65,11 @@ public class GUI implements Observer {
 		//your menu items
 		restart = new JMenuItem("Restart Game",
 		                         KeyEvent.VK_R);
-		restart.setAccelerator(KeyStroke.getKeyStroke(
-		        KeyEvent.VK_2, ActionEvent.ALT_MASK));
-		restart.getAccessibleContext().setAccessibleDescription("Restart the game");
+		restart.addActionListener(new RestartActionListener(_model));
 
 
 		quit = new JMenuItem("Quit Game", KeyEvent.VK_Q);
-		quit.setAccelerator(KeyStroke.getKeyStroke(
-		        KeyEvent.VK_1, ActionEvent.ALT_MASK));
-		quit.getAccessibleContext().setAccessibleDescription(
-		        "Exit the game.");
+		quit.addActionListener(new QuitActionListener(_model));
 		
 		menu.add(quit);
 		menu.add(restart);
