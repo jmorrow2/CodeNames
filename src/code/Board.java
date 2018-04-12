@@ -5,37 +5,32 @@ package code;
 @author Victoria Dib
 @author Jason Zhou
 @author Kimberly So
-
-This class stores 25 location instances. 
 */
-
-import java.util.ArrayList;
-
 
 public class Board {
 	
 	/**An arrayList where the boards location instances are stored */
-	private ArrayList<Location> locArray;
+	private Location[][] locArray;
 	
 	/** Instance of the Board class is use to represent the game board 
 	 *@param ArrayList of location instances 
 	 **/
-	public Board(ArrayList<Location> l) {
+	public Board(Location[][] l) {
 		locArray = l;
 	}
 	
 	/**
-	Getter Method for locArray ArrayList
+	Getter Method for locArray
 	*/
-	public ArrayList<Location> getLocArray() {
+	public Location[][] getLocArray() {
 		return locArray;
 	}
 	
 	/**
-	Setter Method for locArray ArrayList
+	Setter Method for locArray
 	*/
 
-	public void setLocArray(ArrayList<Location> locArray) {
+	public void setLocArray(Location[][] locArray) {
 		this.locArray = locArray;
 	}
 }
