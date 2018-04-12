@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 
 /**
  * Instances of this class are used to represent features of the game Codenames.
@@ -56,9 +55,9 @@ public class Model {
 	private ArrayList<String> agentArray;
 	
 	/** ArrayList containing all the assignments for each location -not revealed, agents/bystanders/assassins, red team starts first*/
-	private ArrayList<Location> locArray;
+	private Location[][] locArray;
 	
-	/** ArrayList */
+	/** ArrayList of all clues that are illegal to give to the guesser*/
 	private ArrayList<String> illegalGuessArray;
 	
 	/** Determines which team's turn it is*/
@@ -67,16 +66,18 @@ public class Model {
 	/** Determines which team's turn it is*/
 	private boolean blueTurn;
 	
+	/** Determines if it is the spymasters turn or the guessers turn*/ 
+	private boolean spyTurn;
+	
+	/** String which returns the winning team's name*/
+	private String winner;
+
 	/** Variable named "clue" that gives a clue */
 	private String clue;
+	
 	/** Number of locations whose codeName is related to the clue -always a whole number greater than 0 */
 	private int count;
 	
-	
-	//helps to see whos move it is 0 = red spymaster; 1 = blue spymaster;
-	private int turn;
-	
-	private ArrayList<Observer> _observers;
 	/** Constructor of Model class
 	 * @param r - number of rows in the board
 	 * @param c - number of columns in the board
@@ -85,9 +86,6 @@ public class Model {
 	 * @param bys - number of bystanders
 	 * @param assassin - number of assassin
 	 * @param f - the name of the filename
-	 * 
-	 * When game starts, the file is read and the names are put into the allCodenamesarraylist, codenames are chosen,
-	 *  a board is created, locations are chosen and it is red teams turn.
 	 *  */
 	public Model(int r, int c, int red, int blue, int bys, int assassin, String f) {
 		row = r;
@@ -97,33 +95,30 @@ public class Model {
 		bystanders = bys;
 		assassins = assassin;
 		file = f;
-		allCodenamesArray = readFile(file);
-//		codenamesArray = chooseCodenames();
-//		agentArray = createAgents();
-//		locArray = createLocationsArray();
-//		board = createBoard(locArray);
-//		redTurn = true;
-//		blueTurn = false;
-		
-		turn = 0;
-		
-		_observers = new ArrayList<Observer>();
-		notifyObservers();
+		setUp();
 	}
+	
+	/**
+	 * Method that sets the board for a new game. The file is read and the names are put into the allCodenamesarraylist, codenames are chosen,
+	 * a board is created, locations are chosen and it is red teams turn.
+	 */
+	public void setUp() {
+		allCodenamesArray = readFile(file);
+		codenamesArray = chooseCodenames();
+		agentArray = createAgents();
+		locArray = createLocationsArray();
+		board = createBoard(locArray);
+		redTurn = true;
+		blueTurn = false;
+		spyTurn = true;
+	}
+	
 	/** 
 	 * Method that creates a new Board
 	 * @param ArrayList<Location> l holds the all the locations on the board
 	 * @return A new board depending on the number of locations in the arraylist*/
-	public Board createBoard(ArrayList<Location> l) {
+	public Board createBoard(Location[][] l) {
 		Board answer = new Board(l);
-		codenamesArray = chooseCodenames();
-		agentArray = createAgents();
-		locArray = createLocationsArray();
-	//	board = createBoard(locArray);
-		redTurn = true;
-		blueTurn = false;
-		notifyObservers();
-
 		return answer;
 	}
 	/** 
@@ -188,11 +183,19 @@ public class Model {
 	 * Gives each Location a codeName and an agent on the Board
 	 * @return a list of created locations each assigned with a codename and a team/agent.
 	 * */
-	public ArrayList<Location> createLocationsArray() {
-		ArrayList<Location> answer = new ArrayList<Location>();
+	public Location[][] createLocationsArray() {
+		ArrayList<Location> temp = new ArrayList<Location>();
 		for(int i=0; i<(row*column); i++) {
 			Location loc = new Location(codenamesArray.get(i), agentArray.get(i));
-			answer.add(loc);
+			temp.add(loc);
+		}
+		Location[][] answer = new Location[row][column];
+		int count = 0;
+		for(int i=0; i<row; i++) {
+			for(int k=0; k<column; k++) {
+			answer[i][k] = temp.get(count);
+			count++;
+			}
 		}
 		return answer;
 	}
@@ -203,20 +206,11 @@ public class Model {
 	 * @return {@code false) if it is legal because it was already revealed.  {@code true} if its an illegal move
 	 */
 	public boolean clueCheck(String c) {
-		if(redTurn){
-			turn = 0;
-		}
-		else if(blueTurn) {
-			turn = 1;
-		}
-		
 		for(String s : illegalGuessArray) {   
 			if(s.equals(c)) {
-				
 				return false;
 			}
 		}
-		turn = -1; //invalid move
 		return true;
 	}
 	/**
@@ -242,6 +236,9 @@ public class Model {
 	}
 	/**
 	 * Method checks whether the board is in a winning state
+	 * If all red agents found returns true and sets winner string to "Red"
+	 * If all blue agents found returns true and sets winner string to "Blue"
+	 * If assassin revealed sets assassinRev to true and returns false
 	 * @return {@code true} if all of one team's agents found or the opposing team wins
 	 *  when assassin is revealed
 	 *  {@code false} if board is not in a winning state
@@ -249,8 +246,10 @@ public class Model {
 	public boolean winningState() {
 		int redCount = 0;
 		int blueCount = 0;
-		int assassinCount = 0;
-			for(Location l : board.getLocArray()) {
+		Location[][] locArray = board.getLocArray();
+		for(int i=0;i<row;i++) {
+			for(int k=0;k<column;k++) {
+				Location l = locArray[i][k];
 				if(l.getRevealed() && l.getAgent().equals("Red")) {
 					redCount++;
 				}
@@ -258,10 +257,17 @@ public class Model {
 					blueCount++;
 				}
 				if(l.getRevealed() && l.getAgent().equals("Assassin")) {
-					assassinCount++;
+					winner = assassinRevealed();
+					return true;
 				}
 			}
-		if(redCount == redAgents || blueCount == blueAgents || assassinCount == assassins) {
+		}
+		if(redCount == redAgents)  {
+			winner = "Red";
+			return true;
+		}
+		if(blueCount == blueAgents) {
+			winner = "Blue";
 			return true;
 		}
 		return false;
@@ -274,14 +280,39 @@ public class Model {
 	 * If neither teams reveal the assassin the game goes on.
 	 */
 	public String assassinRevealed() {
-		if(redTurn) {
-			return "Blue";
-		}
-		if(blueTurn) {
-			return "Red";
-		}
-		return null;
+			if(redTurn) {
+				return "Blue";
+			}
+			if(blueTurn) {
+				return "Red";
+			}
+			return null;
 	}
+	
+	/**
+	 * Method that changes play from the team's spymaster to it's guesser by negating spyTurn boolean
+	 */
+	public void switchSpyGuesserTurn() {
+		if(spyTurn) {
+			spyTurn = false;
+		} else {
+			spyTurn = true;
+		}
+	}
+	
+	/**
+	 * Method that changes the turn from one team to the other by negating redTurn and blueTurn booleans
+	 */
+	public void changeTeam() {
+		if(redTurn) {
+			redTurn = false;
+			blueTurn = true;
+		} else {
+			redTurn = true;
+			blueTurn = false;
+		}
+	}
+	
 	/**
 	 * A getter method to @return the board
 	 */
@@ -459,14 +490,14 @@ public class Model {
 	 * 
 	 * @return gets the arraylist filled with the location instances
 	 */
-	public ArrayList<Location> getLocArray() {
+	public Location[][] getLocArray() {
 		return locArray;
 	}
  /**
   * 
   * @param locArray set equal to the current list of location instances
   */
-	public void setLocArray(ArrayList<Location> locArray) {
+	public void setLocArray(Location[][] locArray) {
 		this.locArray = locArray;
 	}
 /**
@@ -474,7 +505,6 @@ public class Model {
  * @return gets the red team's turn. (true if it is their turn)
  */
 	public boolean getRedTurn() {
-		turn = 0;
 		return redTurn;
 	}
 /**
@@ -489,7 +519,6 @@ public class Model {
  * @return gets the blue teams turn. (true if it is their turn)
  */
 	public boolean getBlueTurn() {
-		turn = 1;
 		return blueTurn;
 	}
 /**
@@ -528,40 +557,14 @@ public class Model {
 	public void setCount(int count) {
 		this.count = count;
 	}
-	public void addObserver(Observer obs) {
-		_observers.add(obs);
-		notifyObservers();
-	}
-
-	public void notifyObservers() {
-		for (Observer obs : _observers) {
-			obs.update();
-		}
-	}
-
-	// 0 = red turn; 1 = blue turn;
-	public int Turnmove() {
-	return turn;
-	}
 	
-	/***
-	 * 
-	 */
-	public void restart() {
-		codenamesArray.clear();
-		codenamesArray = chooseCodenames();
-		
-		agentArray.clear();
-		agentArray = createAgents();
-		
-		locArray.clear();
-		locArray = createLocationsArray();
-		
-		board = createBoard(locArray);  //Need some help with this part! -v.d.  
-										//every time i click restart button, it is expanding the board.
-		redTurn = true;
-		blueTurn = false;
-		
+	/**@return boolean indicating weither is is the spymasters turn*/
+	public boolean getSpyTurn() {
+		return spyTurn;
 	}
 
+	/**@return method for the winner string*/
+	public String getWinner() {
+		return winner;
+	}
 }
