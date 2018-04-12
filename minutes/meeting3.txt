@@ -23,7 +23,8 @@ Tasks completed since last meeting [1-2 minutes]
 
 
 Tasks worked upon but not completed since last meeting [2-4 minutes]
-  Writing javadoc notation
+  Writing Javadoc notations.
+  Clearing up errors within classes and Test Cases. 
 
 
 
