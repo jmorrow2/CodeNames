@@ -20,10 +20,10 @@ public class codenamesTest {
 	@Test
 	public void createBoardTest() {
 		Model m = new Model(5, 5, 9, 8, 7, 1, "src/GameWords.txt");
-		ArrayList<Location> l = m.createLocationsArray();
+		Location[][] l = m.createLocationsArray();
 		Board b = m.createBoard(l);
 		assertNotNull("The createBoard method must create a board", b);
-		assertEquals("The board must have instances of Location equal to (m.row * m.column)", (m.getRow() * m.getColumn()), b.getLocArray().size());
+		assertEquals("The board must have instances of Location equal to (m.row * m.column)", (m.getRow() * m.getColumn()), (l.length * l[0].length));
 	}
 
 	@Test
@@ -88,10 +88,13 @@ public class codenamesTest {
 		assertTrue("When the game begins the redTurn variable must be true", m.getRedTurn());
 		assertFalse("When the game begins the blueTurn variable must be false", m.getBlueTurn());
 		Board b = m.createBoard(m.createLocationsArray());
-		for(Location l : b.getLocArray()) {
-			assertFalse("Every Location instance must have a codename string", l.getCodename().isEmpty());
-			assertFalse("Every Location instance must have a agent string", l.getAgent().isEmpty());
-			assertFalse("Every Location instance must have a revealed boolean that is set to false", l.getRevealed());
+		Location[][] l = b.getLocArray();
+		for(int i=0;i<m.getRow();i++) {
+			for(int k=0;k<m.getColumn();k++) {
+			assertFalse("Every Location instance must have a codename string", l[i][k].getCodename().isEmpty());
+			assertFalse("Every Location instance must have a agent string", l[i][k].getAgent().isEmpty());
+			assertFalse("Every Location instance must have a revealed boolean that is set to false", l[i][k].getRevealed());
+		}
 		}
 	}
 	
@@ -114,7 +117,8 @@ public class codenamesTest {
 		m.setCount(3);
 		assertTrue(m.getRedTurn());
 		assertFalse(m.getBlueTurn());
-		Location l = m.getBoard().getLocArray().get(0);
+		Location[][] locArray = m.getBoard().getLocArray();
+		Location l = locArray[0][0];
 		assertFalse(l.getRevealed());
 		
 		if(l.getAgent().equals("Red")) {
@@ -147,39 +151,53 @@ public class codenamesTest {
 	public void winningStateTest() {
 		Model m = new Model(5, 5, 9, 8, 7, 1, "src/GameWords.txt");
 		assertFalse("The winningState method must return false when the game first begins and no agents are revealed", m.winningState());
-		
-		for(Location l : m.getBoard().getLocArray()) {
-			if(l.getAgent().equals("Blue")) {
-				l.setRevealed(true);
+		Location[][] locArray = m.getBoard().getLocArray();
+		for(int i=0;i<m.getRow();i++) {
+			for(int k=0;k<m.getColumn();k++) { 
+				if(locArray[i][k].getAgent().equals("Blue")) {
+					locArray[i][k].setRevealed(true);
+				}
 			}
 		}
+		
 		assertTrue("The winningState method must return true when all blue agents are revealed", m.winningState());	
 		
 		Model m2 = new Model(5, 5, 9, 8, 7, 1, "src/GameWords.txt");
-		for(Location l : m2.getBoard().getLocArray()) {
-			if(l.getAgent().equals("Red")) {
-				l.setRevealed(true);
+		Location[][] locArray2 = m2.getBoard().getLocArray();
+		for(int i=0;i<m.getRow();i++) {
+			for(int k=0;k<m.getColumn();k++) { 
+				if(locArray2[i][k].getAgent().equals("Red")) {
+					locArray2[i][k].setRevealed(true);
+				}
 			}
 		}
 		assertTrue("The winningState method must return true when all red agents are revealed", m2.winningState());	
 		
 		Model m3 = new Model(5, 5, 9, 8, 7, 1, "src/GameWords.txt");
-		for(Location l : m3.getBoard().getLocArray()) {
-			if(l.getAgent().equals("Assassin")) {
-				l.setRevealed(true);
+		Location[][] locArray3 = m3.getBoard().getLocArray();
+		for(int i=0;i<m.getRow();i++) {
+			for(int k=0;k<m.getColumn();k++) { 
+				if(locArray3[i][k].getAgent().equals("Assassin")) {
+					locArray3[i][k].setRevealed(true);
+				}
 			}
 		}
 		assertTrue("The winningState method must return true when all assassins are revealed", m3.winningState());	
 		
 		Model m4 = new Model(5, 5, 9, 8, 7, 1, "src/GameWords.txt");
-		for(Location l : m4.getBoard().getLocArray()) {
-			if(l.getAgent().equals("Red")) {
-				l.setRevealed(true);
-				break;
+		Location[][] locArray4 = m4.getBoard().getLocArray();
+		for(int i=0;i<m.getRow();i++) {
+			for(int k=0;k<m.getColumn();k++) {
+				if(locArray4[i][k].getAgent().equals("Red")) {
+					locArray4[i][k].setRevealed(true);
+					break;
+				}
 			}
-			for(Location k : m4.getBoard().getLocArray()) {
-				if(k.getAgent().equals("Blue")) {
-					k.setRevealed(true);
+		}
+		for(int i=0;i<m.getRow();i++) {
+			for(int k=0;k<m.getColumn();k++) {
+				if(locArray4[i][k].getAgent().equals("Blue")) {
+					locArray4[i][k].setRevealed(true);
 					break;
 				}
 			}
