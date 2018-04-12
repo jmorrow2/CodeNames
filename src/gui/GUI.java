@@ -101,14 +101,10 @@ public class GUI {
 		menuBar.add(menu);
 		
 		JMenuItem restart = new JMenuItem("Restart Game",KeyEvent.VK_R);
-//		restart.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, ActionEvent.ALT_MASK));
-//		restart.getAccessibleContext().setAccessibleDescription("Restart the game");
 		RestartActionListener res = new RestartActionListener(windowHolder);
 		restart.addActionListener(res);
 
 		JMenuItem quit = new JMenuItem("Quit Game", KeyEvent.VK_Q);
-//		quit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1, ActionEvent.ALT_MASK));
-//		quit.getAccessibleContext().setAccessibleDescription("Exit the game.");
 		QuitActionListener q = new QuitActionListener(windowHolder);
 		quit.addActionListener(q);
 		
@@ -361,14 +357,14 @@ public class GUI {
 	
 	/**Opening dialog box that welcomes players to the game*/
 	public void displayStartGameDialogBox() {
-		 JOptionPane.showMessageDialog(null, "Welcome to Codenames.\n The game begins with the Red Spymaster's turn. \n (we can remove this or make it say something cool.)");
+		 JOptionPane.showMessageDialog(null, "Welcome to Codenames.\nThe game begins with the Red Spymaster's turn. \n \nBystanders are yellow.\nThe assassin is gray.\nRed agents are red\nBlue agents are blue");
 	}
 	
 	/**method that displays the illegal clue/count dialog box 
 	 * */
 	public void displayIllegalMessage() {
-		 JOptionPane.showMessageDialog(null, "Illegal! \n Your Clue cannot be empty or a codename that is currently on the board. "
-		 		+ "\n Also your count must be an integer greater than 0. "
+		 JOptionPane.showMessageDialog(null, "Illegal move! \n \nYour Clue cannot be empty or a codename that is currently on the board. "
+		 		+ "\n Also, your count must be an integer greater than 0. "
 		 		+ "\n Now be a good sport and stop cheating.");
 	}
 	
@@ -383,10 +379,10 @@ public class GUI {
 			currentTeam = "Blue";
 			nextTeam = "Red";
 		}
-		JOptionPane.showMessageDialog(null, "The " + currentTeam + " Team's turn is over"
+		JOptionPane.showMessageDialog(null, "The " + currentTeam + " Team's turn is over."
 				+ "\n It is now the " + nextTeam + " Team's turn "
-				+ "\n Will the " + currentTeam + " Team's guesser please step away from the computer so that you do not see the location of the agents "
-				+ "\n ...that would mean you automatically lose for cheating");
+				+ "\n\n Will the " + currentTeam + " Team's guesser please step away from the computer so \nyou do not see the location of the agents "
+				+ "\n (that would mean you automatically lose for cheating)");
 	}
 	
 	/**method that displays the winner when all agents of a certain team have been revealed
