@@ -28,5 +28,6 @@ public class RestartActionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		d.restart();
+		d.run();
 	}
 }
