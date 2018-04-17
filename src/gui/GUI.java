@@ -34,6 +34,8 @@ import event_handlers.QuitActionListener;
 import event_handlers.RestartActionListener;
 import event_handlers.SelectActionListener;
 import event_handlers.SubmitActionListener;
+import event_handlers.threePlayerActionListener;
+import event_handlers.twoPlayerActionListener;
 import main.Driver;
 
 
@@ -108,6 +110,17 @@ public class GUI {
 		QuitActionListener q = new QuitActionListener(windowHolder);
 		quit.addActionListener(q);
 		
+		JMenuItem twoPlayers = new JMenuItem("New 2-team game", KeyEvent.VK_2);
+		twoPlayerActionListener _2pl = new twoPlayerActionListener(windowHolder);
+		twoPlayers.addActionListener(_2pl);
+		
+		JMenuItem threePlayers = new JMenuItem("New 3-team game", KeyEvent.VK_3);
+		threePlayerActionListener _3pl = new threePlayerActionListener(windowHolder);
+		threePlayers.addActionListener(_3pl);
+
+		
+		menu.add(twoPlayers);
+		menu.add(threePlayers);
 		menu.add(quit);
 		menu.add(restart);
 
@@ -216,6 +229,9 @@ public class GUI {
 				if(agents[i][k].getAgent().equals("Bystander")) {
 					l.setBackground(Color.YELLOW);
 				}
+				if(agents[i][k].getAgent().equals("Green")) {
+					l.setBackground(Color.GREEN);
+				}
 			gameBoardPanel.add(l);
 			}
 		}
@@ -251,6 +267,9 @@ public class GUI {
 					if(agents[i][k].getAgent().equals("Bystander")) {
 						b.setBackground(Color.YELLOW);
 					}
+					if(agents[i][k].getAgent().equals("Green")) {
+						b.setBackground(Color.GREEN);
+					}
 				}
 			gameBoardPanel.add(b);
 			}
@@ -270,11 +289,16 @@ public class GUI {
 			turnLabel.setText("It is the Red SpyMaster's Turn");
 		} if(model.getBlueTurn() && model.getSpyTurn()) {
 			turnLabel.setText("It is the Blue Spymaster's Turn");
+		}if(model.getGreenTurn() && model.getSpyTurn()) {
+			turnLabel.setText("It is the Green Spymaster's Turn");
 		}
 		if(model.getRedTurn() && !(model.getSpyTurn())) {
 			turnLabel.setText("It is the Red Guesser's Turn");
 		} if(model.getBlueTurn() && !(model.getSpyTurn())) {
 			turnLabel.setText("It is the Blue Guesser's Turn");
+		}
+		if(model.getGreenTurn() && !(model.getSpyTurn())) {
+			turnLabel.setText("It is the Green Guesser's Turn");
 		}
 	}
 	
@@ -357,7 +381,7 @@ public class GUI {
 	
 	/**Opening dialog box that welcomes players to the game*/
 	public void displayStartGameDialogBox() {
-		 JOptionPane.showMessageDialog(null, "Welcome to Codenames.\nThe game begins with the Red Spymaster's turn. \n \nBystanders are yellow.\nThe assassin is gray.\nRed agents are red\nBlue agents are blue");
+		 JOptionPane.showMessageDialog(null, "Welcome to Codenames.\nThe game begins with the Red Spymaster's turn. \n \nBystanders are yellow.\nThe assassin(s) is gray.\nRed agents are red.\nBlue agents are blue.\nGreen agents are green.");
 	}
 	
 	/**method that displays the illegal clue/count dialog box 
@@ -372,17 +396,26 @@ public class GUI {
 	public void displaySwitchTeamMessage() {
 		String currentTeam = "";
 		String nextTeam = "";
+		String nextNextTeam = "";
 		if(model.getRedTurn()) {
 			currentTeam = "Red";
 			nextTeam = "Blue";
-		} else {
+			nextNextTeam = "Green";
+		}
+		if(model.getBlueTurn()){
 			currentTeam = "Blue";
+			nextTeam = "Green";
+			nextNextTeam = "Red";
+		}
+		if(model.getGreenTurn()) {
+			currentTeam = "Green";
 			nextTeam = "Red";
+			nextNextTeam = "Blue";
 		}
 		JOptionPane.showMessageDialog(null, "The " + currentTeam + " Team's turn is over."
-				+ "\n It is now the " + nextTeam + " Team's turn "
+				+ "\n It is now the " + nextTeam + " Team's turn.\n"
 				+ "\n\n Will the " + currentTeam + " Team's guesser please step away from the computer so \nyou do not see the location of the agents "
-				+ "\n (that would mean you automatically lose for cheating)");
+				+ "\n (No cheating!)");
 	}
 	
 	/**method that displays the winner when all agents of a certain team have been revealed
