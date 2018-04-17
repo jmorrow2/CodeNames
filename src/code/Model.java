@@ -42,6 +42,9 @@ public class Model {
 	/**  The number of assassins	*/
 	private int assassins;
 	
+	/** The number of greenAgents in the game */
+	private int greenAgents;
+	
 	/**  the name of a file of words */
 	private String file;
 	
@@ -66,6 +69,9 @@ public class Model {
 	/** Determines which team's turn it is*/
 	private boolean blueTurn;
 	
+	/** Determines which team's turn it is*/
+	private boolean greenTurn;
+	
 	/** Determines if it is the spymasters turn or the guessers turn*/ 
 	private boolean spyTurn;
 	
@@ -87,11 +93,12 @@ public class Model {
 	 * @param assassin - number of assassin
 	 * @param f - the name of the filename
 	 *  */
-	public Model(int r, int c, int red, int blue, int bys, int assassin, String f) {
+	public Model(int r, int c, int red, int blue, int green,  int bys, int assassin, String f) {
 		row = r;
 		column = c;
 		redAgents = red;
 		blueAgents = blue;
+		greenAgents = green;
 		bystanders = bys;
 		assassins = assassin;
 		file = f;
@@ -110,6 +117,7 @@ public class Model {
 		board = createBoard(locArray);
 		redTurn = true;
 		blueTurn = false;
+		greenTurn = false;
 		spyTurn = true;
 	}
 	
@@ -170,6 +178,9 @@ public class Model {
 		for (int i=0; i<blueAgents; i++) {
 			answer.add("Blue");
 		}
+		for (int i=0; i<greenAgents; i++) {
+			answer.add("Green");
+		}
 		for (int i=0; i<bystanders; i++) {
 			answer.add("Bystander");
 		}
@@ -229,7 +240,7 @@ public class Model {
 			}
 		}
 		count--;
-		if((redTurn && l.getAgent().equals("Red")) || (blueTurn && l.getAgent().equals("Blue"))){
+		if((redTurn && l.getAgent().equals("Red")) || (blueTurn && l.getAgent().equals("Blue")) || greenTurn && l.getAgent().equals("Green")){
 			return true;
 		}
 		return false;
@@ -246,6 +257,7 @@ public class Model {
 	public boolean winningState() {
 		int redCount = 0;
 		int blueCount = 0;
+		int greenCount = 0;
 		Location[][] locArray = board.getLocArray();
 		for(int i=0;i<row;i++) {
 			for(int k=0;k<column;k++) {
@@ -255,6 +267,11 @@ public class Model {
 				}
 				if(l.getRevealed() && l.getAgent().equals("Blue")) {
 					blueCount++;
+				}
+			
+				if(l.getRevealed() && l.getAgent().equals("Green")) {
+					greenCount++;
+		
 				}
 				if(l.getRevealed() && l.getAgent().equals("Assassin")) {
 					winner = assassinRevealed();
@@ -269,6 +286,10 @@ public class Model {
 		if(blueCount == blueAgents) {
 			winner = "Blue";
 			return true;
+		}
+		if(greenCount == greenAgents && greenCount !=0 ) {
+			winner = "Green";
+					return true;
 		}
 		return false;
 	}
@@ -285,6 +306,9 @@ public class Model {
 			}
 			if(blueTurn) {
 				return "Red";
+			}
+			if(greenTurn) {
+				return "Green";
 			}
 			return null;
 	}
@@ -307,11 +331,22 @@ public class Model {
 		if(redTurn) {
 			redTurn = false;
 			blueTurn = true;
-		} else {
+			greenTurn = false;
+		}
+		if(greenTurn) {
+
 			redTurn = true;
+			blueTurn = false;
+			greenTurn = false;
+		}
+		if(blueTurn) {
+			redTurn = false;
+			greenTurn = true;
 			blueTurn = false;
 		}
 	}
+		
+
 	
 	/**
 	 * A getter method to @return the board
@@ -521,6 +556,8 @@ public class Model {
 	public boolean getBlueTurn() {
 		return blueTurn;
 	}
+	
+
 /**
  * 
  * @param blueTurn sets the current turn equal to the blue team.
@@ -528,6 +565,21 @@ public class Model {
 	public void setBlueTurn(boolean blueTurn) {
 		this.blueTurn = blueTurn;
 	}
+	
+/**@return gets the green teams turn (true if it is their turn) */
+	public boolean getGreenTurn() {
+		return greenTurn;
+	}
+	
+
+/**
+ * 
+ * @param blueTurn sets the current turn equal to the blue team.
+ */
+	public void setGreenTurn(boolean greenTurn) {
+		this.greenTurn = greenTurn;
+	}
+	
 /**
  * 
  * @return gets the clue from the team's spymaster
@@ -551,14 +603,14 @@ public class Model {
 	}
 /**
  * 
- * @param count sets count equal to the current number of locations whos codename
+ * @param count sets count equal to the current number of locations whose codename
  * is related to the clue.
  */
 	public void setCount(int count) {
 		this.count = count;
 	}
 	
-	/**@return boolean indicating weither is is the spymasters turn*/
+	/**@return boolean indicating whether is is the spymasters turn*/
 	public boolean getSpyTurn() {
 		return spyTurn;
 	}
@@ -567,4 +619,6 @@ public class Model {
 	public String getWinner() {
 		return winner;
 	}
+
+	
 }
