@@ -19,7 +19,7 @@ public class codenamesTest {
 
 	@Test
 	public void createBoardTest() {
-		Model m = new Model(5, 5, 9, 8, 7, 1, "src/GameWords.txt");
+		Model m = new Model(5, 5, 9, 8,0,  7, 1, "src/GameWords.txt"); //0 green agents
 		Location[][] l = m.createLocationsArray();
 		Board b = m.createBoard(l);
 		assertNotNull("The createBoard method must create a board", b);
@@ -28,14 +28,14 @@ public class codenamesTest {
 
 	@Test
 	public void readFileTest() {
-		Model m = new Model(5, 5, 9, 8, 7, 1, "src/GameWords.txt");
+		Model m = new Model(5, 5, 9, 8,0, 7, 1, "src/GameWords.txt");
 		ArrayList<String> test = m.readFile(m.getFile());
 		assertNotNull("The readFile method must create an ArrayList of the codenames", test);
 	}
 	
 	@Test
 	public void chooseCodenamesTest() {
-		Model m = new Model(5, 5, 9, 8, 7, 1, "src/GameWords.txt");
+		Model m = new Model(5, 5, 9, 8,0, 7, 1, "src/GameWords.txt");
 		ArrayList<String> test = m.chooseCodenames();
 		assertEquals("The chooseCodenames method must create an ArrayList of codename strings equal to (m.row * m.column)", (m.getRow() * m.getColumn()), test.size());
 		HashMap<String, Integer> hash = new HashMap<>();
@@ -49,7 +49,7 @@ public class codenamesTest {
 	
 	@Test
 	public void createAgentsTest() {
-		Model m = new Model(5, 5, 9, 8, 7, 1, "src/GameWords.txt");
+		Model m = new Model(5, 5, 9, 8,0, 7, 1, "src/GameWords.txt");
 		ArrayList<String> test = m.createAgents();
 		assertEquals("The createAgents method must create an ArrayList of agent strings equal to (m.getRow() * m.getColumn())", (m.getRow() * m.getColumn()), (test.size()));
 		
@@ -84,7 +84,7 @@ public class codenamesTest {
 	
 	@Test
 	public void createLocationsArrayTest() {
-		Model m = new Model(5, 5, 9, 8, 7, 1, "src/GameWords.txt");
+		Model m = new Model(5, 5, 9, 8,0, 7, 1, "src/GameWords.txt");
 		assertTrue("When the game begins the redTurn variable must be true", m.getRedTurn());
 		assertFalse("When the game begins the blueTurn variable must be false", m.getBlueTurn());
 		Board b = m.createBoard(m.createLocationsArray());
@@ -100,7 +100,7 @@ public class codenamesTest {
 	
 	@Test 
 	public void clueCheckTest() {
-		Model m = new Model(5, 5, 9, 8, 7, 1, "src/GameWords.txt");
+		Model m = new Model(5, 5, 9, 8, 0, 7, 1, "src/GameWords.txt");
 		String test = m.getIllegalGuessArray().get(0);
 		assertFalse("The clueCheck method return false for a clue that is contained in the illegalGuessArray", m.clueCheck(test));
 		
@@ -113,7 +113,7 @@ public class codenamesTest {
 	
 	@Test
 	public void selectedTest() {
-		Model m = new Model(5, 5, 9, 8, 7, 1, "src/GameWords.txt");
+		Model m = new Model(5, 5, 9, 8, 0, 7, 1, "src/GameWords.txt");
 		m.setCount(3);
 		assertTrue(m.getRedTurn());
 		assertFalse(m.getBlueTurn());
@@ -149,7 +149,7 @@ public class codenamesTest {
 	
 	@Test 
 	public void winningStateTest() {
-		Model m = new Model(5, 5, 9, 8, 7, 1, "src/GameWords.txt");
+		Model m = new Model(5, 5, 9, 8,0, 7, 1, "src/GameWords.txt");
 		assertFalse("The winningState method must return false when the game first begins and no agents are revealed", m.winningState());
 		Location[][] locArray = m.getBoard().getLocArray();
 		for(int i=0;i<m.getRow();i++) {
@@ -162,7 +162,7 @@ public class codenamesTest {
 		
 		assertTrue("The winningState method must return true when all blue agents are revealed", m.winningState());	
 		
-		Model m2 = new Model(5, 5, 9, 8, 7, 1, "src/GameWords.txt");
+		Model m2 = new Model(5, 5, 9, 8,0, 7, 1, "src/GameWords.txt");
 		Location[][] locArray2 = m2.getBoard().getLocArray();
 		for(int i=0;i<m.getRow();i++) {
 			for(int k=0;k<m.getColumn();k++) { 
@@ -173,7 +173,7 @@ public class codenamesTest {
 		}
 		assertTrue("The winningState method must return true when all red agents are revealed", m2.winningState());	
 		
-		Model m3 = new Model(5, 5, 9, 8, 7, 1, "src/GameWords.txt");
+		Model m3 = new Model(5, 5, 9, 8, 0, 7, 1, "src/GameWords.txt");
 		Location[][] locArray3 = m3.getBoard().getLocArray();
 		for(int i=0;i<m.getRow();i++) {
 			for(int k=0;k<m.getColumn();k++) { 
@@ -184,7 +184,7 @@ public class codenamesTest {
 		}
 		assertTrue("The winningState method must return true when all assassins are revealed", m3.winningState());	
 		
-		Model m4 = new Model(5, 5, 9, 8, 7, 1, "src/GameWords.txt");
+		Model m4 = new Model(5, 5, 9, 8,0, 7, 1, "src/GameWords.txt");
 		Location[][] locArray4 = m4.getBoard().getLocArray();
 		for(int i=0;i<m.getRow();i++) {
 			for(int k=0;k<m.getColumn();k++) {
@@ -207,7 +207,7 @@ public class codenamesTest {
 	
 	@Test
 	public void assassinRevealedTest() {
-		Model m = new Model(5, 5, 9, 8, 7, 1, "src/GameWords.txt");
+		Model m = new Model(5, 5, 9, 8,0, 7, 1, "src/GameWords.txt");
 		assertTrue(m.getRedTurn());
 		assertFalse(m.getBlueTurn());
 		assertEquals("The assassinRevealed method must return Blue if the assassin is revealed during the Red turn", m.assassinRevealed(), "Blue");
