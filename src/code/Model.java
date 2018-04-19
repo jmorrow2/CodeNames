@@ -89,6 +89,7 @@ public class Model {
 	 * @param c - number of columns in the board
 	 * @param red = number of red agents 
 	 * @param blue - number of blue agents
+	 * @param green - number of green agents
 	 * @param bys - number of bystanders
 	 * @param assassin - number of assassin
 	 * @param f - the name of the filename
@@ -229,8 +230,8 @@ public class Model {
 	 *  or not the Location held the current team's agent.
 	 * 
 	 * @param l Location to be selected and revealed.
-	 * @return {@code true} if red turn and red agent revealed, blue turn and blue agent revealed
-	 * {@code false} if  red/blue team revealed opposing team's agent
+	 * @return {@code true} if red turn and red agent revealed, blue turn and blue agent revealed, or green agent revealed
+	 * {@code false} if  red/blue/green team revealed opposing team's agent
 	 */
 	public boolean selected(Location l) {
 		l.setRevealed(true); 
@@ -305,10 +306,10 @@ public class Model {
 				return "Blue";
 			}
 			if(blueTurn) {
-				return "Red";
+				return "Green";
 			}
 			if(greenTurn) {
-				return "Green";
+				return "Red";
 			}
 			return null;
 	}
@@ -329,14 +330,9 @@ public class Model {
 	 */
 	public void changeTeam() {
 		if(redTurn) {
+			
 			redTurn = false;
 			blueTurn = true;
-			greenTurn = false;
-		}
-		if(greenTurn) {
-
-			redTurn = true;
-			blueTurn = false;
 			greenTurn = false;
 		}
 		if(blueTurn) {
@@ -344,6 +340,13 @@ public class Model {
 			greenTurn = true;
 			blueTurn = false;
 		}
+		if(greenTurn) {
+
+			redTurn = true;
+			blueTurn = false;
+			greenTurn = false;
+		}
+	
 	}
 		
 
@@ -418,6 +421,21 @@ public class Model {
 	public void setBlueAgents(int blueAgents) {
 		this.blueAgents = blueAgents;
 	}
+	/**
+	 * 
+	 * @param greenAgents the number of green agents
+	 */
+	public int getGreenAgents() {
+		return greenAgents;
+	}
+	/**
+	 * @param greenAgents - the current number of green agents to be made
+	 * 
+	 */
+	public void setGreenAgents(int greenAgents) {
+		this.greenAgents = greenAgents;
+	}
+	
 /**
  * 
  * @return the number of bystanders on the board
