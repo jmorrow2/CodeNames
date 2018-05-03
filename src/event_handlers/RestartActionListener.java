@@ -17,7 +17,7 @@ public class RestartActionListener implements ActionListener {
 	/**GUI connected to this action listener*/
 	private Driver d;
 	
-	/**@param g - GUI
+	/**@param d - Driver
 	 * */
 	public RestartActionListener(Driver drv) {
 		d = drv;

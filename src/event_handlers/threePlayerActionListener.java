@@ -22,10 +22,8 @@ public class threePlayerActionListener implements ActionListener {
 	private Driver d;
 	
 	private Model m;
-
-
 	
-	/**@param g - GUI
+	/**@param d - Driver
 	 * */
 	public threePlayerActionListener(Driver drv) {
 		d = drv;
@@ -36,14 +34,9 @@ public class threePlayerActionListener implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
-		d.restart();
-		
+		d.restart();	
 		m = new Model(5,5,6,5,5,7,2,"src/GameWords.txt"); //(rows, columns,red,blue,green,bystanders,assassins,file_) -- 3 Players
-
 		SwingUtilities.invokeLater(new Driver(m));
-
-
 	}		
 }
 

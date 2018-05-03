@@ -23,8 +23,7 @@ public class twoPlayerActionListener implements ActionListener {
 	/**GUI connected to this action listener*/
 	private Driver d;
 	
-
-	/**@param g - GUI
+	/**@param d - Driver
 	 * */
 	public twoPlayerActionListener(Driver drv) {
 		d = drv;
@@ -37,11 +36,7 @@ public class twoPlayerActionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		d.restart();	 
-		
 		Model m = new Model(5,5,9,8,0,7,1,"src/GameWords.txt"); //(rows, columns,red,blue, green,bystanders,assassins,file_) -- 2 Players
-
 		SwingUtilities.invokeLater(new Driver(m));
-		
-		
 	}
 }
