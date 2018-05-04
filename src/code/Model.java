@@ -8,7 +8,7 @@ import java.util.Collections;
 
 /**
  * Instances of this class are used to represent features of the game Codenames.
- * 
+ *  
  * @author Victoria Dib
  * @author James Morrow
  * @author Harsh Patel
