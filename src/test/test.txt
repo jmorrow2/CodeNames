@@ -1,4 +1,3 @@
-
 TEST CASES FOR EACH METHOD  //Fulfills Bullet Number 1
 test.txt
 	Fulfills bullet 1
@@ -100,3 +99,44 @@ assassinsRevealedTest()
 	Test Case - test.codenamesTest.assassinsRevealedTest
 	Functionality - checks to see if a team revealed the assassin and returns the opposite team that wins.
 	
+	Phase 3 Tests
+createLocationsArray3PlayerGameTest()
+	Fulfills bullet 2
+	 	Creates a List containing randomly generated assignments for each of the 
+	 	6 Red Agents, 5 Blue Agents, 5 Green Agents, 7 Innocent Bystanders, and 2 Assassins [3 points]
+	 	
+	 Method - code.Model.createLocationArray
+	 Test Case - test.codenamesTest.createLocationsArray3PlayerGameTest
+	 Functionality - creates a location array, counts that it contains the correct amount of agents and assassins
+	 makes sure the agents and assassins are randomly assigned to the locations
+	 
+winningState3PlayerTest()
+	Fulfills bullet 3
+		Method defined which correctly returns whether or not the Board is in one of the winning states [5 points]
+		
+	Method - code.Model.winningState
+	Test Case - test.codenamesTest.winningState3PlayerTest
+	Functionality - Increments each teams count until all agents (ex: all 6 red, all 5 blue , all 5 green or the 2 assassins) are found. 
+	If all blue or red or green agents are revealed or if both assassins are revealed (teams that reveal assassins lose) and game 
+	is put in a winning state
+	If all teams agents are found but the team has already revealed an assassin and lost the method returns false, not in a winning state
+
+assassinsRevealed3PlayerTest()
+	Fulfills bullet 4
+		Method defined which correctly returns which team wins once the 2nd Assassin is revealed [8 points]	
+	
+	Method - code.Model.assassinRevealed
+	Test Case - test.codenamesTest.assassinsRevealed3PlayerTest
+	Functionality - Makes sure when both assassins have been revealed the team that has not revealed any assassins wins
+		
+changeCurrentTeam3PlayerTest()
+	Fulfills bullet 5
+		Method which returns which is used at the end of a turn to determine the team whose move is next 
+		(this must include the possibility that the next team in the 3-team rotation had previously Revealed an Assassin) [7 points]
+		
+	Method - code.Model.changeCurrentTeam
+	Test Case - test.codenamesTest.changeCurrentTeam3PlayerTest
+	Functionality - Ensures that when no one has lost (revealed an assassin) the rotation of the teams is
+	red to blue to green 
+	Makes sure that if a team loses (reveals an assassin) they are taken out of the rotation
+	i.e. if Red loses the rotaion is then blue to green to blue

@@ -49,7 +49,7 @@ public class GUI {
 	
 	/**Driver instance variable belonging to the GUI*/
 	private Driver windowHolder;
-	
+
 	/**JPanel instance variable which is the mainPanel of the driver's JFrame*/
 	private JPanel mainPanel;
 	
@@ -285,21 +285,23 @@ public class GUI {
 	/**refreshes the turnPanel with the current players turn
 	 * indicates teams color and whether it is a spymaster or guesser's turn using booleans from the model*/
 	public void refreshTurnPanel() {
-		if(model.getRedTurn() && model.getSpyTurn()) {
-			turnLabel.setText("It is the Red SpyMaster's Turn");
-		} if(model.getBlueTurn() && model.getSpyTurn()) {
-			turnLabel.setText("It is the Blue Spymaster's Turn");
-		}if(model.getGreenTurn() && model.getSpyTurn()) {
-			turnLabel.setText("It is the Green Spymaster's Turn");
+		String team = "";
+		String spyOrGuess = "";
+		switch (model.getCurrentTeam()) {
+		case "Red" : team = "Red";
+			break;
+		case "Blue" : team = "Blue";
+			break;
+		case "Green" : team = "Green";
+			break;
 		}
-		if(model.getRedTurn() && !(model.getSpyTurn())) {
-			turnLabel.setText("It is the Red Guesser's Turn");
-		} if(model.getBlueTurn() && !(model.getSpyTurn())) {
-			turnLabel.setText("It is the Blue Guesser's Turn");
+		if(model.getSpyTurn()) {
+			spyOrGuess = " SpyMaster's Turn";
+		} else {
+			spyOrGuess = " Guesser's Turn";
 		}
-		if(model.getGreenTurn() && !(model.getSpyTurn())) {
-			turnLabel.setText("It is the Green Guesser's Turn");
-		}
+		
+		turnLabel.setText("It is the " + team + spyOrGuess);
 	}
 	
 	/**refreshes GUI components for the guesser
@@ -370,12 +372,10 @@ public class GUI {
 	
 	/**method that switches the GUI from one team to the other
 	 * displays the switch team dialog box
-	 * calls changeTeam() which changes the redTurn and blueTurn booleans in model so the turnPanel will display the correct teams turn (red or blue)
 	 * calls switchSpyGuesserGUI() to switch to the next teams spymaster
 	 * */
 	public void switchTeamGUI() {
 		displaySwitchTeamMessage();
-		model.changeTeam();
 		switchSpyGuesserGUI();
 	}
 	
@@ -392,26 +392,13 @@ public class GUI {
 		 		+ "\n Now be a good sport and stop cheating.");
 	}
 	
-	/**method that displays the switch team dialog box at the end of the teams turn*/
+	/**retrieves the currentTeam string from the model class and sets it to currentTeam
+	 * calls changeCurrentTeam in model which updates the model's currentTeam string and sets nextTeam to the updated currentTeam
+	 * displays the switch team dialog box with currentTeam and nextTeam
+	 */
 	public void displaySwitchTeamMessage() {
-		String currentTeam = "";
-		String nextTeam = "";
-		String nextNextTeam = "";
-		if(model.getRedTurn()) {
-			currentTeam = "Red";
-			nextTeam = "Blue";
-			nextNextTeam = "Green";
-		}
-		if(model.getBlueTurn()){
-			currentTeam = "Blue";
-			nextTeam = "Green";
-			nextNextTeam = "Red";
-		}
-		if(model.getGreenTurn()) {
-			currentTeam = "Green";
-			nextTeam = "Red";
-			nextNextTeam = "Blue";
-		}
+		String currentTeam = model.getCurrentTeam();
+		String nextTeam = model.changeCurrentTeam();
 		JOptionPane.showMessageDialog(null, "The " + currentTeam + " Team's turn is over."
 				+ "\n It is now the " + nextTeam + " Team's turn.\n"
 				+ "\n\n Will the " + currentTeam + " Team's guesser please step away from the computer so \nyou do not see the location of the agents "
@@ -423,6 +410,12 @@ public class GUI {
 	 * */
 	public void displayWinningMessage(String winner) {
 		JOptionPane.showMessageDialog(null, "The " + winner + " Team Won!");
+	}
+	
+	/**method that displays which team has been killed when an assassin is revealed*/
+	public void displayLosingMessage(String loser) {
+		JOptionPane.showMessageDialog(null, "The " + loser + " Team has been killed by the Assassin! \n"
+				+ "They can no longer continue playing");
 	}
 	
 	/**method that calls updateJFrameIfNotHeadless method*/
@@ -473,5 +466,10 @@ public class GUI {
 	public void easterEgg() {
 		ImageIcon ee = new ImageIcon("easterEgg.png");
 		JOptionPane.showMessageDialog(null, ee, "CAPTAIN HERTZ", JOptionPane.INFORMATION_MESSAGE); 
+	}
+	
+	/**method that returns this GUIs driver*/ 
+	public Driver getWindowHolder() {
+		return windowHolder;
 	}
 }

@@ -63,20 +63,23 @@ public class Model {
 	/** ArrayList of all clues that are illegal to give to the guesser*/
 	private ArrayList<String> illegalGuessArray;
 	
-	/** Determines which team's turn it is*/
-	private boolean redTurn;
-	
-	/** Determines which team's turn it is*/
-	private boolean blueTurn;
-	
-	/** Determines which team's turn it is*/
-	private boolean greenTurn;
+	/** String which determines which teams turn it is*/
+	private String currentTeam;
 	
 	/** Determines if it is the spymasters turn or the guessers turn*/ 
 	private boolean spyTurn;
 	
 	/** String which returns the winning team's name*/
 	private String winner;
+	
+	/**String identifying who was just revealed an assassin and lost the game*/
+	private String loser;
+	
+	/**Boolean identifying whether the game is two player or three*/
+	private boolean threePlayer;
+	
+	/**ArrayList containing which team(s) lost the game*/
+	private ArrayList<String> loserArray;	
 
 	/** Variable named "clue" that gives a clue */
 	private String clue;
@@ -108,7 +111,7 @@ public class Model {
 	
 	/**
 	 * Method that sets the board for a new game. The file is read and the names are put into the allCodenamesarraylist, codenames are chosen,
-	 * a board is created, locations are chosen and it is red teams turn.
+	 * a board is created, locations are chosen and it is red teams turn. Also  determines if it is a 3 player game and sets the three player boolean accordingly.
 	 */
 	public void setUp() {
 		allCodenamesArray = readFile(file);
@@ -116,10 +119,15 @@ public class Model {
 		agentArray = createAgents();
 		locArray = createLocationsArray();
 		board = createBoard(locArray);
-		redTurn = true;
-		blueTurn = false;
-		greenTurn = false;
+		currentTeam = "Red";
 		spyTurn = true;
+		winner = null;
+		loserArray = new ArrayList<String>();
+		threePlayer = false;
+		if(greenAgents>0) {
+			threePlayer = true;
+			loser = null;
+		}
 	}
 	
 	/** 
@@ -228,6 +236,7 @@ public class Model {
 	/**
 	 * Decrements the count and updates the Location's codename and whether
 	 *  or not the Location held the current team's agent.
+	 *  Also updates loser string and loserArray if a player selects an assassin
 	 * 
 	 * @param l Location to be selected and revealed.
 	 * @return {@code true} if red turn and red agent revealed, blue turn and blue agent revealed, or green agent revealed
@@ -241,8 +250,13 @@ public class Model {
 			}
 		}
 		count--;
-		if((redTurn && l.getAgent().equals("Red")) || (blueTurn && l.getAgent().equals("Blue")) || greenTurn && l.getAgent().equals("Green")){
+		if((currentTeam.equals("Red") && l.getAgent().equals("Red")) || (currentTeam.equals("Blue") && l.getAgent().equals("Blue")) || currentTeam.equals("Green") && l.getAgent().equals("Green")){
 			return true;
+		}
+		if(l.getAgent().equals("Assassin")) {
+			loser = currentTeam;
+			loserArray.add(loser);
+			return false;
 		}
 		return false;
 	}
@@ -250,7 +264,9 @@ public class Model {
 	 * Method checks whether the board is in a winning state
 	 * If all red agents found returns true and sets winner string to "Red"
 	 * If all blue agents found returns true and sets winner string to "Blue"
-	 * If assassin revealed sets assassinRev to true and returns false
+	 * If all green agents found returns true and sets winner string to "Green"
+	 * If all assassins found returns true and sets winner string to assassinRevealed() call
+	 * Otherwise returns false
 	 * @return {@code true} if all of one team's agents found or the opposing team wins
 	 *  when assassin is revealed
 	 *  {@code false} if board is not in a winning state
@@ -259,59 +275,64 @@ public class Model {
 		int redCount = 0;
 		int blueCount = 0;
 		int greenCount = 0;
+		int assassinCount = 0;
 		Location[][] locArray = board.getLocArray();
 		for(int i=0;i<row;i++) {
 			for(int k=0;k<column;k++) {
 				Location l = locArray[i][k];
-				if(l.getRevealed() && l.getAgent().equals("Red")) {
+				if(l.getRevealed() && l.getAgent().equals("Red") && !loserArray.contains("Red")) {
 					redCount++;
 				}
-				if(l.getRevealed() && l.getAgent().equals("Blue")) {
+				if(l.getRevealed() && l.getAgent().equals("Blue") && !loserArray.contains("Blue")) {
 					blueCount++;
 				}
-			
-				if(l.getRevealed() && l.getAgent().equals("Green")) {
+				if(l.getRevealed() && l.getAgent().equals("Green") && !loserArray.contains("Green")) {
 					greenCount++;
-		
 				}
 				if(l.getRevealed() && l.getAgent().equals("Assassin")) {
-					winner = assassinRevealed();
-					return true;
+					assassinCount++;		
 				}
 			}
-		}
-		if(redCount == redAgents)  {
-			winner = "Red";
-			return true;
-		}
-		if(blueCount == blueAgents) {
-			winner = "Blue";
-			return true;
-		}
-		if(greenCount == greenAgents && greenCount !=0 ) {
-			winner = "Green";
-					return true;
+			if(redCount == redAgents)  {
+				winner = "Red";
+				return true;
+			}
+			if(blueCount == blueAgents) {
+				winner = "Blue";
+				return true;
+			}
+			if(greenCount == greenAgents && threePlayer) {
+				winner = "Green";
+				return true;
+			}
+			if(assassinCount == assassins) {
+				winner = assassinRevealed();
+				return true;
+			}
 		}
 		return false;
 	}
 	
+	
 	/**
 	 * 
-	 * @return if red agents reveal the assassins, blue agents win
-	 * if blue agents reveal the assassin, the red agents win
-	 * If neither teams reveal the assassin the game goes on.
+	 * @return if all assassins have been revealed checks the loserArray to determine which team has not lost
 	 */
+	
 	public String assassinRevealed() {
-			if(redTurn) {
-				return "Blue";
-			}
-			if(blueTurn) {
-				return "Green";
-			}
-			if(greenTurn) {
-				return "Red";
-			}
-			return null;
+		if(!loserArray.contains("Red")) {
+			winner = "Red";
+		}
+		if(!loserArray.contains("Blue")) {
+			winner = "Blue";
+		}
+		if(!loserArray.contains("Green") && threePlayer) {
+			winner = "Green";
+		}
+		if(loserArray.size()<2 && threePlayer) {
+			winner = null;
+		}
+		return winner;
 	}
 	
 	/**
@@ -325,32 +346,141 @@ public class Model {
 		}
 	}
 	
-	/**
-	 * Method that changes the turn from one team to the other by negating redTurn and blueTurn booleans
-	 */
-	public void changeTeam() {
-		if(redTurn) {
-			
-			redTurn = false;
-			blueTurn = true;
-			greenTurn = false;
-		}
-		if(blueTurn) {
-			redTurn = false;
-			greenTurn = true;
-			blueTurn = false;
-		}
-		if(greenTurn) {
-
-			redTurn = true;
-			blueTurn = false;
-			greenTurn = false;
-		}
+//	public void changeTeam() {
+//		if(loserArray.size()==0) {
+//			if(redTurn) {	
+//				redTurn = false;
+//				blueTurn = true;
+//				greenTurn = false;
+//				return;
+//			}
+//			if(blueTurn && greenAgents==0) {
+//				redTurn = true;
+//				greenTurn = false;
+//				blueTurn = false;
+//				return;
+//			}
+//			if(blueTurn && greenAgents>0) {
+//				redTurn = false;
+//				greenTurn = true;
+//				blueTurn = false;
+//				return;
+//			}
+//			if(greenTurn) {
+//				redTurn = true;
+//				blueTurn = false;
+//				greenTurn = false;
+//				return;
+//			}
+//		}
+//		if(loserArray.contains("Red")) {
+//			if(redTurn) {	
+//				redTurn = false;
+//				blueTurn = true;
+//				greenTurn = false;
+//				return;
+//			}
+//			if(blueTurn) {
+//				greenTurn = true;
+//				blueTurn = false;
+//				return;
+//			}
+//			if(greenTurn) {
+//				blueTurn = true;
+//				greenTurn = false;
+//				return;
+//			}
+//		}
+//		if(loserArray.contains("Blue")) {
+//			if(blueTurn) {	
+//				redTurn = false;
+//				blueTurn = false;
+//				greenTurn = true;
+//				return;
+//			}
+//			if(redTurn) {
+//				greenTurn = true;
+//				redTurn = false;
+//				return;
+//			}
+//			if(greenTurn) {
+//				redTurn = true;
+//				greenTurn = false;
+//				return;
+//			}
+//		}
+//		if(loserArray.contains("Green")) {
+//			if(greenTurn) {	
+//				redTurn = true;
+//				blueTurn = false;
+//				greenTurn = false;
+//				return;
+//			}
+//			if(blueTurn) {
+//				redTurn = true;
+//				blueTurn = false;
+//				return;
+//			}
+//			if(redTurn) {
+//				blueTurn = true;
+//				redTurn = false;
+//				return;
+//			}
+//		}
+//	}
 	
+	/**Changes the currentTeam string to the next team who is going to play
+	 * takes into account whether the game is 2 player or 3 player
+	 * takes into account whether one of the teams has already lost and does not allow them to play anymore
+	 * @return the updated currentTeam String */
+	public String changeCurrentTeam() {
+		if(!threePlayer) {
+			switch (currentTeam) {
+			case "Red" : currentTeam = "Blue";
+				return currentTeam;
+			case "Blue" : currentTeam = "Red";
+				return currentTeam;
+			}
+		}
+		if(loserArray.isEmpty()) {
+			switch (currentTeam) {
+			case "Red" : currentTeam = "Blue";
+				return currentTeam;
+			case "Blue" : currentTeam = "Green";
+				return currentTeam;
+			case "Green" : currentTeam = "Red";
+				return currentTeam;
+			}
+		}
+		switch(loserArray.get(0)) {
+		case "Red" : switch (currentTeam) {
+						case "Red" : currentTeam = "Blue";
+						return currentTeam;
+						case "Blue" : currentTeam = "Green";
+						return currentTeam;
+						case "Green" : currentTeam = "Blue";
+						return currentTeam;
+					}
+		case "Blue" : switch (currentTeam) {
+						case "Blue" : currentTeam = "Green";
+						return currentTeam;
+						case "Green" : currentTeam = "Red";
+						return currentTeam;
+						case "Red" : currentTeam = "Green";
+						return currentTeam;
+					}
+		case "Green" : switch (currentTeam) {
+						case "Green" : currentTeam = "Red";
+						return currentTeam;
+						case "Red" : currentTeam = "Blue";
+						return currentTeam;
+						case "Blue" : currentTeam = "Red";
+						return currentTeam;
+					}
+		}
+		return null;
 	}
-		
-
-	
+			
 	/**
 	 * A getter method to @return the board
 	 */
@@ -481,15 +611,11 @@ public class Model {
 		this.file = file;
 	}
 	
-	/**
-	 * 
-	 * @return returns the arraylist of all possible codenames
-	 */
+	/**@return returns the arraylist of all possible codenames*/
 	public ArrayList<String> getAllCodenamesArray() {
 		return allCodenamesArray;
 	}
 /**
- * 
  * @param allCodenamesArray current arraylist of all possible codenames
  */
 	public void setAllCodenamesArray(ArrayList<String> allCodenamesArray) {
@@ -497,7 +623,6 @@ public class Model {
 	}
 
 	/**
-	 * 
 	 * @return an arraylist of distinct codenames to be assigned to locations
 	 */
 	public ArrayList<String> getCodenamesArray() {
@@ -547,80 +672,31 @@ public class Model {
 		return locArray;
 	}
  /**
-  * 
   * @param locArray set equal to the current list of location instances
   */
 	public void setLocArray(Location[][] locArray) {
 		this.locArray = locArray;
 	}
-/**
- * 
- * @return gets the red team's turn. (true if it is their turn)
- */
-	public boolean getRedTurn() {
-		return redTurn;
-	}
-/**
- * 
- * @param sets the current turn equal to the reds turn.
- */
-	public void setRedTurn(boolean redTurn) {
-		this.redTurn = redTurn;
-	}
-/**
- * 
- * @return gets the blue teams turn. (true if it is their turn)
- */
-	public boolean getBlueTurn() {
-		return blueTurn;
-	}
-	
-
-/**
- * 
- * @param blueTurn sets the current turn equal to the blue team.
- */
-	public void setBlueTurn(boolean blueTurn) {
-		this.blueTurn = blueTurn;
-	}
-	
-/**@return gets the green teams turn (true if it is their turn) */
-	public boolean getGreenTurn() {
-		return greenTurn;
-	}
-	
-
-/**
- * 
- * @param blueTurn sets the current turn equal to the blue team.
- */
-	public void setGreenTurn(boolean greenTurn) {
-		this.greenTurn = greenTurn;
-	}
 	
 /**
- * 
  * @return gets the clue from the team's spymaster
  */
 	public String getClue() {
 		return clue;
 	}
 /**
- * 
  * @param clue sets the clue from the team's spymaster as the current clue 
  */
 	public void setClue(String clue) {
 		this.clue = clue;
 	}
 /**
- * 
  * @return gets the number of locations whose codename is related to the clue
  */
 	public int getCount() {
 		return count;
 	}
 /**
- * 
  * @param count sets count equal to the current number of locations whose codename
  * is related to the clue.
  */
@@ -638,5 +714,33 @@ public class Model {
 		return winner;
 	}
 
+	/**@return String of team that lost by revealing an assassin*/
+	public String getLoser() {
+		return loser;
+	}
 	
+	/**@param sets the loser string*/
+	public void setLoser(String loser) {
+		this.loser = loser;
+	}
+
+	/**@return boolean indicating whether the game is two or three player*/
+	public boolean isThreePlayer() {
+		return threePlayer;
+	}
+	
+	/**@return ArrayList of losing teams */
+	public ArrayList<String> getLoserArray() {
+		return loserArray;
+	}
+	
+	/**@return String identifying the team whos turn it is*/
+	public String getCurrentTeam() {
+		return currentTeam;
+	}
+
+	/**@param sets the currentTeam string*/
+	public void setCurrentTeam(String currentTeam) {
+		this.currentTeam = currentTeam;
+	}
 }

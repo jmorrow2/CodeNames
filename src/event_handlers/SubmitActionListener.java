@@ -48,6 +48,12 @@ public class SubmitActionListener implements ActionListener {
 			g.clearTextFields();
 			return;
 		}
+		if(clue.equals("I WIN!!!")) {
+			g.displayWinningMessage(m.getCurrentTeam());
+			g.getWindowHolder().restart();
+			g.getWindowHolder().run();
+		return;
+		}
 		if(clue.equals("") || count.equals("")) {
 			g.displayIllegalMessage();
 			g.clearTextFields();
