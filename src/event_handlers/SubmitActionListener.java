@@ -32,7 +32,8 @@ public class SubmitActionListener implements ActionListener {
 	/**method that handles when the spymaster submits and clue and count
 	 * retrieves clue from the GUI's JTextField and sets it equal to clue string 
 	 * retrieves count from the GUI's JTextField and sets it equal to count string 
-	 * determined if clue equals ("Easter Egg") if so then the easter egg method in GUI is triggered and clear text fields. end method
+	 * determines if clue equals ("Easter Egg") if so then the easter egg method in GUI is triggered and clear text fields. end method
+	 * determines if clue equals ("I WIN!!!") if so the current team wins for finding the auto-win easter egg. a new game is then started
 	 * checks if clue or count are empty. if so displays illegal message and clear text fields. end method
 	 * turns the clue uppercase and calls clueCheck in model to be checked, if legal sets the model's clue string to the clue. if illegal displays illegal message and clear text fields. end method
 	 * makes sure count is a positive int by trying to parse count text to an int and if it is positive set it to the models count variable. if not able displays illegal message and clear text fields. end method

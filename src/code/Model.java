@@ -313,7 +313,6 @@ public class Model {
 		return false;
 	}
 	
-	
 	/**
 	 * 
 	 * @return if all assassins have been revealed checks the loserArray to determine which team has not lost
@@ -345,89 +344,6 @@ public class Model {
 			spyTurn = true;
 		}
 	}
-	
-//	public void changeTeam() {
-//		if(loserArray.size()==0) {
-//			if(redTurn) {	
-//				redTurn = false;
-//				blueTurn = true;
-//				greenTurn = false;
-//				return;
-//			}
-//			if(blueTurn && greenAgents==0) {
-//				redTurn = true;
-//				greenTurn = false;
-//				blueTurn = false;
-//				return;
-//			}
-//			if(blueTurn && greenAgents>0) {
-//				redTurn = false;
-//				greenTurn = true;
-//				blueTurn = false;
-//				return;
-//			}
-//			if(greenTurn) {
-//				redTurn = true;
-//				blueTurn = false;
-//				greenTurn = false;
-//				return;
-//			}
-//		}
-//		if(loserArray.contains("Red")) {
-//			if(redTurn) {	
-//				redTurn = false;
-//				blueTurn = true;
-//				greenTurn = false;
-//				return;
-//			}
-//			if(blueTurn) {
-//				greenTurn = true;
-//				blueTurn = false;
-//				return;
-//			}
-//			if(greenTurn) {
-//				blueTurn = true;
-//				greenTurn = false;
-//				return;
-//			}
-//		}
-//		if(loserArray.contains("Blue")) {
-//			if(blueTurn) {	
-//				redTurn = false;
-//				blueTurn = false;
-//				greenTurn = true;
-//				return;
-//			}
-//			if(redTurn) {
-//				greenTurn = true;
-//				redTurn = false;
-//				return;
-//			}
-//			if(greenTurn) {
-//				redTurn = true;
-//				greenTurn = false;
-//				return;
-//			}
-//		}
-//		if(loserArray.contains("Green")) {
-//			if(greenTurn) {	
-//				redTurn = true;
-//				blueTurn = false;
-//				greenTurn = false;
-//				return;
-//			}
-//			if(blueTurn) {
-//				redTurn = true;
-//				blueTurn = false;
-//				return;
-//			}
-//			if(redTurn) {
-//				blueTurn = true;
-//				redTurn = false;
-//				return;
-//			}
-//		}
-//	}
 	
 	/**Changes the currentTeam string to the next team who is going to play
 	 * takes into account whether the game is 2 player or 3 player

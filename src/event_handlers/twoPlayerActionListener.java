@@ -20,7 +20,8 @@ import main.Driver;
  */
 
 public class twoPlayerActionListener implements ActionListener {
-	/**GUI connected to this action listener*/
+	
+	/**GUI connected to this action listener*/ 
 	private Driver d;
 	
 	/**@param d - Driver

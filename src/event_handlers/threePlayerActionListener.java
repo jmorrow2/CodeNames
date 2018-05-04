@@ -18,9 +18,11 @@ import main.Driver;
  */
 
 public class threePlayerActionListener implements ActionListener {
+	
 	/**GUI connected to this action listener*/
 	private Driver d;
 	
+	/**model connected to this action listener*/
 	private Model m;
 	
 	/**@param d - Driver
