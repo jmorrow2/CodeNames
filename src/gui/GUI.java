@@ -285,16 +285,8 @@ public class GUI {
 	/**refreshes the turnPanel with the current players turn
 	 * indicates teams color and whether it is a spymaster or guesser's turn using booleans from the model*/
 	public void refreshTurnPanel() {
-		String team = "";
+		String team = model.getCurrentTeam();
 		String spyOrGuess = "";
-		switch (model.getCurrentTeam()) {
-		case "Red" : team = "Red";
-			break;
-		case "Blue" : team = "Blue";
-			break;
-		case "Green" : team = "Green";
-			break;
-		}
 		if(model.getSpyTurn()) {
 			spyOrGuess = " SpyMaster's Turn";
 		} else {
